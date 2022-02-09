@@ -1,0 +1,33 @@
+{
+  "name": "improvedcorgroupe7",
+  "version": "1.0.0",
+  "description": "clean code project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node improvedOCR.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philoXof/ImprovedOCRGroupe7.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/philoXof/ImprovedOCRGroupe7/issues"
+  },
+  "homepage": "https://github.com/philoXof/ImprovedOCRGroupe7#readme",
+  "devDependencies": {
+    "@types/node": "^16.11.13",
+    "jest": "^27.4.5"
+  },
+  "dependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
+    "@types/jest": "^27.0.3",
+    "babel-jest": "^27.4.5",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  }
+}
