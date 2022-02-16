@@ -4,7 +4,7 @@ const str = "    _  _     _  _ _  _  _ \n" +
             "  | _| _||_||_ |_  ||_||_|\n" +
             "  ||_  _|  | _||_| ||_| _|\n";
 
-const filePath = "./data";
+const filePath = "./data.text";
 describe('all tests',()=>{
     test('should be true',()=>{
         expect(true).toBe(true);
