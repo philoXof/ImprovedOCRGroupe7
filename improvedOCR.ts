@@ -10,54 +10,53 @@ export class ImprovedOCR{
         return this.filePath;
     }
 
-    private getFileData() : string{
+    public getFileData() : string {
         return  fs.readFileSync(this.filePath, {encoding:'utf-8'});
     }
 
-    public decodeFile() : string{
+
+    public decodeFile() : string {
         let fileContent : string = this.getFileData();
 
 
         //create tab 2 dim
-        let tab = ImprovedOCR.createTab();
+        let tab : Array<Array<string>> = ImprovedOCR.createTab();
         tab = ImprovedOCR.initTab(tab);
 
         //data text to tab 2 dim
-        for (let i = 0,k = 0; i <= tab.length; i++, k++) {
+        /*for (let i = 0,k = 0; i <= tab.length; i++, k++) {
             for (let j = 0; j <= tab[i].length; j++) {
-                //console.log(fileContent[k]);
-
+                console.log(fileContent[k]);
                 tab[i][j] = fileContent[k];
             }
-        }
+        }*/
 
         ImprovedOCR.printTab(tab);
 
         return fileContent;
     }
 
-    private static printTab(tab : any) : void {
+    /**
+     * try with tab 2 dimensions
+     */
+    private static printTab(tab : Array<Array<string>>) : void {
         for (let i = 0; i <= tab.length; i++) {
             for (let j = 0; j <= tab[i].length; j++) {
-                console.log(i,j,tab[i][j]);
+                console.log(i, j, tab[i][j]);
             }
         }
     }
 
-    private static initTab(tab : any) : any{
-        for (let i = 0; i < tab.length; i++) {
-            for (let j = 0; j < tab[i].length; j++) {
-                tab[i][j] = " ";
+    private static initTab(tab : Array<Array<string>>) : Array<Array<string>> {
+        for (let i = 0; i <= tab.length; i++) {
+            for (let j = 0; j <= tab[i].length; j++) {
+                tab[i][j] = "1";
             }
         }
         return tab;
     }
 
-    private static createTab() : any{
-        let tab = new Array(2);
-        for (let x = 0; x < tab.length; x++) {
-            tab[x] = new Array(25);
-        }
-        return tab;
+    private static createTab() : Array<Array<string>>{
+        return new Array(new Array(25),new Array(25),new Array(25));
     }
 }

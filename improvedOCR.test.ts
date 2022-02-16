@@ -1,10 +1,11 @@
 import {ImprovedOCR} from "./improvedOCR";
+import * as fs from 'fs';
 
-const str = "    _  _     _  _ _  _  _ \n" +
-            "  | _| _||_||_ |_  ||_||_|\n" +
-            "  ||_  _|  | _||_| ||_| _|\n";
+
 
 const filePath = "./data.text";
+const str = fs.readFileSync(filePath, {encoding:'utf-8'});
+
 describe('all tests',()=>{
     test('should be true',()=>{
         expect(true).toBe(true);
