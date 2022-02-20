@@ -1,9 +1,10 @@
 import { ImprovedOCR } from "./improvedOCR";
+import { ValuesString } from "./valuesString";
 
 
-const OCR = new ImprovedOCR("./data.text");
-
-//console.log(OCR.getFileData());
+const OCR = new ImprovedOCR("./files/file2");
 
 const res = OCR.decodeFile();
 console.log(res);
+
+

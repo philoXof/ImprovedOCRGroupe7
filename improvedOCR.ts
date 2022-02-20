@@ -1,4 +1,6 @@
 import * as fs from 'fs';
+import { ValuesString } from "./valuesString";
+import { log } from "util";
 export class ImprovedOCR{
     private readonly filePath : string;
 
@@ -16,32 +18,48 @@ export class ImprovedOCR{
 
 
     public decodeFile() : string {
+        const valuesString : ValuesString = new ValuesString();
+        const tab : string[] = this.createAndInitTab();
+
+        let code : string = "";
+        for (let i = 0; i <= 24; i += 3) {
+            code += valuesString.tabToNumber([tab[0].slice(i, i + 3), tab[1].slice(i, i + 3), tab[2].slice(i, i + 3)]);
+        }
+
+        return code;
+    }
+
+    private createAndInitTab() : string[] {
         let fileContent : string = this.getFileData();
 
+        let tab : string[] = ["","",""];
 
-        //create tab 2 dim
-        let tab : Array<Array<string>> = ImprovedOCR.createTab();
-        tab = ImprovedOCR.initTab(tab);
-
-        //data text to tab 2 dim
-        /*for (let i = 0,k = 0; i <= tab.length; i++, k++) {
-            for (let j = 0; j <= tab[i].length; j++) {
-                console.log(fileContent[k]);
-                tab[i][j] = fileContent[k];
+        for (let i = 0, j = 0; i <= 2; i++) {
+            let temp = "";
+            for (; fileContent[j] != '\n'; j++) {
+                temp +=  fileContent[j];
             }
-        }*/
+            j++;
+            if(temp.length < 27){
+                while (temp.length < 27) temp += " ";
+            }
+            tab[i] = temp;
+        }
+        return tab;
+    }
 
-        ImprovedOCR.printTab(tab);
-
-        return fileContent;
+    private static printTab1(tab : Array<string>) : void {
+        for (let i = 0; i <= 2; i++) {
+            console.log(tab[i]);
+        }
     }
 
     /**
      * try with tab 2 dimensions
-     */
+
     private static printTab(tab : Array<Array<string>>) : void {
         for (let i = 0; i <= tab.length; i++) {
-            for (let j = 0; j <= tab[i].length; j++) {
+            for (let j = 0; j <= 25; j++) {
                 console.log(i, j, tab[i][j]);
             }
         }
@@ -49,14 +67,10 @@ export class ImprovedOCR{
 
     private static initTab(tab : Array<Array<string>>) : Array<Array<string>> {
         for (let i = 0; i <= tab.length; i++) {
-            for (let j = 0; j <= tab[i].length; j++) {
-                tab[i][j] = "1";
+            for (let j = 0; j <= 25; j++) {
+                tab[i][j] = "d";
             }
         }
         return tab;
-    }
-
-    private static createTab() : Array<Array<string>>{
-        return new Array(new Array(25),new Array(25),new Array(25));
-    }
+    }*/
 }
