@@ -3,19 +3,22 @@ import { ValuesString } from "./valuesString";
 
 
 
-const filePath1 : string  = "files/file1";
-const filePath2 : string  = "files/file2";
+const filePath1 : string = "files/file1";
+const filePath2 : string = "files/file2";
 const filePath3 : string = "files/file3";
 const filePath4 : string = "files/file4";
+const filePath5 : string = "files/file5";
+
 const valuesString : ValuesString = new ValuesString();
 const ocr1 : ImprovedOCR = new ImprovedOCR(filePath1);
 const ocr2 : ImprovedOCR = new ImprovedOCR(filePath2);
 const ocr3 : ImprovedOCR = new ImprovedOCR(filePath3);
 const ocr4 : ImprovedOCR = new ImprovedOCR(filePath4);
+const ocr5 : ImprovedOCR = new ImprovedOCR(filePath5);
 
 describe('all tests',()=>{
 
-    describe('ça fait du vert :)',()=>{
+    describe('ça fait du vert, et le vert c\'est cool ! :)',()=>{
         test('should be true',()=>{
             expect(true).toBe(true);
         });
@@ -36,6 +39,9 @@ describe('all tests',()=>{
         });
         test('should be "111111111"',()=>{
             expect(ocr4.decodeFile()).toBe("111111111");
+        });
+        test('should be "921584964"',()=>{
+            expect(ocr5.decodeFile()).toBe("921584964");
         });
     });
 
