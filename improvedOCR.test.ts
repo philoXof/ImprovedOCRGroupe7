@@ -11,12 +11,16 @@ const filePath3 : string = "files/file3";
 const filePath4 : string = "files/file4";
 const filePath5 : string = "files/file5";
 const filePath6 : string = "files/file6";
+const filePath7 : string = "files/file7";
+const filePath8 : string = "files/file8";
 const ocr1 : ImprovedOCR = new ImprovedOCR(filePath1);
 const ocr2 : ImprovedOCR = new ImprovedOCR(filePath2);
 const ocr3 : ImprovedOCR = new ImprovedOCR(filePath3);
 const ocr4 : ImprovedOCR = new ImprovedOCR(filePath4);
 const ocr5 : ImprovedOCR = new ImprovedOCR(filePath5);
 const ocr6 : ImprovedOCR = new ImprovedOCR(filePath6);
+const ocr7 : ImprovedOCR = new ImprovedOCR(filePath7);
+const ocr8 : ImprovedOCR = new ImprovedOCR(filePath8);
 
 describe('all tests',()=>{
 
@@ -60,9 +64,15 @@ describe('all tests',()=>{
         test('should be "418900666"',()=>{
             expect(ocr6.decodeFile()).toBe("418900666");
         });
+        test('should be "12?13678?"', ()=>{
+            expect(ocr7.decodeFile()).toBe('?2?13678?');
+        });
+        test('should be "312?8?93?"', ()=>{
+            expect(ocr8.decodeFile()).toBe('312?8?93?');
+        });
     });
 
-    describe('ValuesString tests', ()=>{
+    describe('TabToString tests', ()=>{
 
         test('should be 0', ()=>{
             expect(tabToString.convert([
@@ -206,6 +216,12 @@ describe('all tests',()=>{
         });
         test('should be false', ()=>{
             expect(checksumValidation.isValid('664371495')).toBe(false);
+        });
+        test('should be false', ()=>{
+            expect(checksumValidation.isValid('?2?13678?')).toBe(false);
+        });
+        test('should be false', ()=>{
+            expect(checksumValidation.isValid('312?8?93?')).toBe(false);
         });
     });
 
