@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { ValuesString } from "./valuesString";
+import { TabToString } from "./TabToString";
 export class ImprovedOCR{
     private readonly filePath : string;
 
@@ -13,13 +13,13 @@ export class ImprovedOCR{
 
 
     public decodeFile() : string {
-        const valuesString : ValuesString = new ValuesString();
+        const tabToString : TabToString = new TabToString();
         const tab : string[] = this.createAndInitTab();
 
         let code : string = "";
         for (let i = 0; i <= 24; i += 3) {
             const tempTab : string[] = [tab[0].slice(i, i + 3), tab[1].slice(i, i + 3), tab[2].slice(i, i + 3)];
-            code += valuesString.tabToNumber(tempTab);
+            code += tabToString.tabToString(tempTab);
         }
 
         return code;

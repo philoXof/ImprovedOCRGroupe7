@@ -1,5 +1,10 @@
-export class ValuesString {
+export class TabToString {
 
+    private zero : string[] = [
+        " _ ",
+        "| |",
+        "|_|",
+    ];
     private one : string[]  = [
         "   ",
         "  |",
@@ -47,7 +52,7 @@ export class ValuesString {
     ];
 
     //ajouter string en retour pour renvoyer
-    public tabToNumber(tab : string[]) : string {
+    public tabToString(tab : string[]) : string {
         for (let [key,value] of this.keymap) if(JSON.stringify(value) == JSON.stringify(tab)) return key;
         return "0";
     }
@@ -55,6 +60,7 @@ export class ValuesString {
     private keymap : Map<string,string[]> = new Map<string, string[]>();
 
     constructor() {
+        this.keymap.set("0", this.zero);
         this.keymap.set("1", this.one);
         this.keymap.set("2", this.two);
         this.keymap.set("3", this.tree);
