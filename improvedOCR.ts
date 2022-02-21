@@ -18,22 +18,24 @@ export class ImprovedOCR{
 
         let code : string = "";
         for (let i = 0; i <= 24; i += 3) {
-            code += valuesString.tabToNumber([tab[0].slice(i, i + 3), tab[1].slice(i, i + 3), tab[2].slice(i, i + 3)]);
+            const tempTab : string[] = [tab[0].slice(i, i + 3), tab[1].slice(i, i + 3), tab[2].slice(i, i + 3)];
+            code += valuesString.tabToNumber(tempTab);
         }
 
         return code;
     }
 
-    private createAndInitTab() : string[] {
+    public createAndInitTab() : string[] {
         let fileContent : string = this.getFileData();
 
         let tab : string[] = ["","",""];
 
         for (let i = 0, j = 0; i <= 2; i++) {
             let temp = "";
-            for (; fileContent[j] != '\n'; j++) {
+            for (; fileContent[j] != '\r'; j++) {
                 temp +=  fileContent[j];
             }
+            j++;
             j++;
             if(temp.length < 27){
                 while (temp.length < 27) temp += " ";
