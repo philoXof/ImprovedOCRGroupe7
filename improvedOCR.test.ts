@@ -1,16 +1,16 @@
 import {ImprovedOCR} from "./improvedOCR";
 import { TabToString } from "./TabToString";
+import fs from "fs";
+import { ChecksumValidation } from "./ChecksumValidation";
 
 
-
+const tabToString : TabToString = new TabToString();
 const filePath1 : string = "files/file1";
 const filePath2 : string = "files/file2";
 const filePath3 : string = "files/file3";
 const filePath4 : string = "files/file4";
 const filePath5 : string = "files/file5";
 const filePath6 : string = "files/file6";
-
-const valuesString : TabToString = new TabToString();
 const ocr1 : ImprovedOCR = new ImprovedOCR(filePath1);
 const ocr2 : ImprovedOCR = new ImprovedOCR(filePath2);
 const ocr3 : ImprovedOCR = new ImprovedOCR(filePath3);
@@ -26,6 +26,18 @@ describe('all tests',()=>{
         });
         test('should be false',()=>{
             expect(false).toBe(false);
+        });
+    });
+
+    describe('files content tests', ()=>{
+        test('file1 should be the same', ()=>{
+            expect(ocr1.getFileContent()).toBe(fs.readFileSync(filePath1, {encoding:'utf-8'}));
+        });
+        test('file3 should be the same', ()=>{
+            expect(ocr3.getFileContent()).toBe(fs.readFileSync(filePath3, {encoding:'utf-8'}));
+        });
+        test('file6 should be the same', ()=>{
+            expect(ocr6.getFileContent()).toBe(fs.readFileSync(filePath6, {encoding:'utf-8'}));
         });
     });
 
@@ -53,70 +65,70 @@ describe('all tests',()=>{
     describe('ValuesString tests', ()=>{
 
         test('should be 0', ()=>{
-            expect(valuesString.tabToString([
+            expect(tabToString.convert([
                 " _ ",
                 "| |",
                 "|_|",
             ])).toBe("0")
         });
         test('should be 1', ()=>{
-            expect(valuesString.tabToString([
+            expect(tabToString.convert([
                 "   ",
                 "  |",
                 "  |",
             ])).toBe("1")
         });
         test('should be 2', ()=>{
-            expect(valuesString.tabToString([
+            expect(tabToString.convert([
                 " _ ",
                 " _|",
                 "|_ ",
             ])).toBe("2")
         });
         test('should be 3', ()=>{
-            expect(valuesString.tabToString([
+            expect(tabToString.convert([
                 " _ ",
                 " _|",
                 " _|"
             ])).toBe("3")
         });
         test('should be 4', ()=>{
-            expect(valuesString.tabToString([
+            expect(tabToString.convert([
                 "   ",
                 "|_|",
                 "  |"
             ])).toBe("4")
         });
         test('should be 5', ()=>{
-            expect(valuesString.tabToString([
+            expect(tabToString.convert([
                 " _ ",
                 "|_ ",
                 " _|"
             ])).toBe("5")
         });
         test('should be 6', ()=>{
-            expect(valuesString.tabToString([
+            expect(tabToString.convert([
                 " _ ",
                 "|_ ",
                 "|_|"
             ])).toBe("6")
         });
         test('should be 7', ()=>{
-            expect(valuesString.tabToString([
+            expect(tabToString.convert([
                 " _ ",
                 "  |",
                 "  |"
             ])).toBe("7")
         });
         test('should be 8', ()=>{
-            expect(valuesString.tabToString([
+            expect(tabToString.convert([
                 " _ ",
                 "|_|",
                 "|_|"
             ])).toBe("8")
         });
         test('should be 9', ()=>{
-            expect(valuesString.tabToString([
+            expect(tabToString.convert([
                 " _ ",
                 "|_|",
                 " _|"
@@ -126,7 +138,7 @@ describe('all tests',()=>{
 
     describe('createAndInitTab tests by files', ()=>{
         describe('file1', ()=>{
-            const tab1 = ocr1.createAndInitTab();
+            const tab1 :string [] = ocr1.fileToTab();
             test('length should be 3', ()=>{
                 expect(tab1.length).toBe(3);
             });
@@ -144,7 +156,7 @@ describe('all tests',()=>{
             });
         });
         describe('file2', ()=>{
-            const tab2 = ocr2.createAndInitTab();
+            const tab2 : string[] = ocr2.fileToTab();
             test('length should be 3', ()=>{
                 expect(tab2.length).toBe(3);
             });
@@ -162,7 +174,7 @@ describe('all tests',()=>{
             });
         });
         describe('file4', ()=>{
-            const tab4 = ocr4.createAndInitTab();
+            const tab4 : string[] = ocr4.fileToTab();
             test('length should be 3', ()=>{
                 expect(tab4.length).toBe(3);
             });
@@ -181,5 +193,20 @@ describe('all tests',()=>{
         });
     });
 
+    describe('CheckSumValidation Tests', ()=>{
+        const checksumValidation : ChecksumValidation = new ChecksumValidation();
+        test('should be false', ()=>{
+            expect(checksumValidation.isValid('123')).toBe(false);
+        });
+        test('should be false', ()=>{
+            expect(checksumValidation.isValid('0123456789')).toBe(false);
+        });
+        test('should be true', ()=>{
+            expect(checksumValidation.isValid('457508000')).toBe(true);
+        });
+        test('should be false', ()=>{
+            expect(checksumValidation.isValid('664371495')).toBe(false);
+        });
+    });
 
 });
