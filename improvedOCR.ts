@@ -1,15 +1,10 @@
 import * as fs from 'fs';
 import { ValuesString } from "./valuesString";
-import { log } from "util";
 export class ImprovedOCR{
     private readonly filePath : string;
 
     constructor(filePath : string) {
         this.filePath = filePath;
-    }
-
-    public getFilePath() : string {
-        return this.filePath;
     }
 
     public getFileData() : string {
@@ -48,11 +43,11 @@ export class ImprovedOCR{
         return tab;
     }
 
-    private static printTab1(tab : Array<string>) : void {
+    /*private static printTab1(tab : Array<string>) : void {
         for (let i = 0; i <= 2; i++) {
             console.log(tab[i]);
         }
-    }
+    }*/
 
     /**
      * try with tab 2 dimensions

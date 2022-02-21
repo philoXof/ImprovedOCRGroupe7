@@ -1,5 +1,4 @@
 import {ImprovedOCR} from "./improvedOCR";
-import * as fs from 'fs';
 import { ValuesString } from "./valuesString";
 
 
@@ -7,33 +6,41 @@ import { ValuesString } from "./valuesString";
 const filePath1 : string  = "files/file1";
 const filePath2 : string  = "files/file2";
 const filePath3 : string = "files/file3";
+const filePath4 : string = "files/file4";
 const valuesString : ValuesString = new ValuesString();
 
 
 describe('all tests',()=>{
-    test('should be true',()=>{
-        expect(true).toBe(true);
+
+    describe('ça fait du vert :)',()=>{
+        test('should be true',()=>{
+            expect(true).toBe(true);
+        });
+        test('should be false',()=>{
+            expect(false).toBe(false);
+        });
     });
 
-    test('should be "123456789"',()=>{
-        const improvedOCR : ImprovedOCR = new ImprovedOCR(filePath1);
-        expect(improvedOCR.decodeFile()).toBe("123456789");
-    });
+    describe('decoding test', ()=>{
+        test('should be "123456789"',()=>{
+            const improvedOCR : ImprovedOCR = new ImprovedOCR(filePath1);
+            expect(improvedOCR.decodeFile()).toBe("123456789");
+        });
 
-    test('should be "111999888"',()=>{
-        const improvedOCR : ImprovedOCR = new ImprovedOCR(filePath2);
-        expect(improvedOCR.decodeFile()).toBe("111999888");
-    });
+        test('should be "111999888"',()=>{
+            const improvedOCR : ImprovedOCR = new ImprovedOCR(filePath2);
+            expect(improvedOCR.decodeFile()).toBe("111999888");
+        });
 
-    test('should be "912588934"',()=>{
-        const improvedOCR : ImprovedOCR = new ImprovedOCR(filePath3);
-        expect(improvedOCR.decodeFile()).toBe("912588934");
+        test('should be "912588934"',()=>{
+            const improvedOCR : ImprovedOCR = new ImprovedOCR(filePath3);
+            expect(improvedOCR.decodeFile()).toBe("912588934");
+        });
+        test('should be "111111111"',()=>{
+            const improvedOCR : ImprovedOCR = new ImprovedOCR(filePath4);
+            expect(improvedOCR.decodeFile()).toBe("111111111");
+        });
     });
-
-    test('should be false',()=>{
-        expect(false).toBe(false);
-    });
-
 
     describe('ValuesString tests', ()=>{
 
