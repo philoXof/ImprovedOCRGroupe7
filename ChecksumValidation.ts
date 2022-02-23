@@ -6,4 +6,12 @@ export class ChecksumValidation{
             checksum += Number(code[i]) * j;
         return checksum % 11 == 0;
     }
+
+    /**
+     * pour la partie 3
+     */
+    public addSuffixeError(code : string) : string {
+        if(code.includes('?')) return code + " ILL";
+        return this.isValid(code) ? code : code+ " ERR";
+    }
 }

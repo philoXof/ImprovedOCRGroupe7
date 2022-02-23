@@ -2,9 +2,8 @@ import {ImprovedOCR} from "./improvedOCR";
 import { TabToString } from "./TabToString";
 import fs from "fs";
 import { ChecksumValidation } from "./ChecksumValidation";
+import { DecodesFiles } from "./decodesFiles";
 
-
-const tabToString : TabToString = new TabToString();
 const filePath1 : string = "files/file1";
 const filePath2 : string = "files/file2";
 const filePath3 : string = "files/file3";
@@ -21,6 +20,19 @@ const ocr5 : ImprovedOCR = new ImprovedOCR(filePath5);
 const ocr6 : ImprovedOCR = new ImprovedOCR(filePath6);
 const ocr7 : ImprovedOCR = new ImprovedOCR(filePath7);
 const ocr8 : ImprovedOCR = new ImprovedOCR(filePath8);
+const tabToString : TabToString = new TabToString();
+const decodeFiles :DecodesFiles = new DecodesFiles();
+const checksumValidation : ChecksumValidation = new ChecksumValidation();
+const files : string[] = [
+    filePath1,
+    filePath2,
+    filePath3,
+    filePath4,
+    filePath5,
+    filePath6,
+    filePath7,
+    filePath8,
+];
 
 describe('all tests',()=>{
 
@@ -45,7 +57,7 @@ describe('all tests',()=>{
         });
     });
 
-    describe('decoding test', ()=>{
+    describe('decoding test User story 1', ()=>{
         test('should be "123456789"',()=>{
             expect(ocr1.decodeFile()).toBe("123456789");
         });
@@ -203,26 +215,79 @@ describe('all tests',()=>{
         });
     });
 
-    describe('CheckSumValidation Tests', ()=>{
-        const checksumValidation : ChecksumValidation = new ChecksumValidation();
-        test('should be false', ()=>{
-            expect(checksumValidation.isValid('123')).toBe(false);
+    describe('CheckSumValidation Tests User Story 2 / User Story 3', ()=>{
+        describe('checksum isValid test', ()=>{
+            test('should be false', ()=>{
+                expect(checksumValidation.isValid('123')).toBe(false);
+            });
+            test('should be false', ()=>{
+                expect(checksumValidation.isValid('0123456789')).toBe(false);
+            });
+            test('should be true', ()=>{
+                expect(checksumValidation.isValid('123456789')).toBe(true);
+            });
+            test('should be true', ()=>{
+                expect(checksumValidation.isValid('457508000')).toBe(true);
+            });
+            test('should be false', ()=>{
+                expect(checksumValidation.isValid('664371495')).toBe(false);
+            });
+            test('should be false', ()=>{
+                expect(checksumValidation.isValid('?2?13678?')).toBe(false);
+            });
+            test('should be false', ()=>{
+                expect(checksumValidation.isValid('312?8?93?')).toBe(false);
+            });
         });
-        test('should be false', ()=>{
-            expect(checksumValidation.isValid('0123456789')).toBe(false);
-        });
-        test('should be true', ()=>{
-            expect(checksumValidation.isValid('457508000')).toBe(true);
-        });
-        test('should be false', ()=>{
-            expect(checksumValidation.isValid('664371495')).toBe(false);
-        });
-        test('should be false', ()=>{
-            expect(checksumValidation.isValid('?2?13678?')).toBe(false);
-        });
-        test('should be false', ()=>{
-            expect(checksumValidation.isValid('312?8?93?')).toBe(false);
+        describe('checksum tests', ()=>{
+            test('should be ERR', ()=>{
+                expect(checksumValidation.addSuffixeError('123')).toBe('123 ERR');
+            });
+            test('should be ERR', ()=>{
+                expect(checksumValidation.addSuffixeError('0123456789')).toBe('0123456789 ERR');
+            });
+            test('should be 457508000', ()=>{
+                expect(checksumValidation.addSuffixeError('457508000')).toBe('457508000');
+            });
+            test('should be ERR', ()=>{
+                expect(checksumValidation.addSuffixeError('664371495')).toBe('664371495 ERR');
+            });
+            test('should be ILL', ()=>{
+                expect(checksumValidation.addSuffixeError('?2?13678?')).toBe('?2?13678? ILL');
+            });
+            test('should be ILL', ()=>{
+                expect(checksumValidation.addSuffixeError('312?8?93?')).toBe('312?8?93? ILL');
+            });
         });
     });
 
+    describe('decodeFiles tests User Story 2',()=>{
+        const codes : Array<string> = decodeFiles.decode(files);
+
+        test('file 1 should be "123456789"', ()=>{
+            expect(codes[0]).toBe('123456789');
+        });
+        test('file 2 should be ""', ()=>{
+            expect(codes[1]).toBe('111999888 ERR');
+        });
+        test('file 3 should be "912588934"', ()=>{
+            expect(codes[2]).toBe('912588934');
+        });
+        test('file 4 should be "111111111 ERR"', ()=>{
+            expect(codes[3]).toBe('111111111 ERR');
+        });
+        test('file 5 should be "921584964 ERR"', ()=>{
+            expect(codes[4]).toBe('921584964 ERR');
+        });
+        test('file 6 should be "418900666 ERR"', ()=>{
+            expect(codes[5]).toBe('418900666 ERR');
+        });
+        test('file 7 should be "?2?13678? ILL"', ()=>{
+            expect(codes[6]).toBe('?2?13678? ILL');
+        });
+        test('file 8 should be "312?8?93? ILL"', ()=>{
+            expect(codes[7]).toBe('312?8?93? ILL');
+        });
+
+    });
 });
