@@ -1,7 +1,6 @@
 import { ImprovedOCR } from "./improvedOCR";
 
-const OCR = new ImprovedOCR("./files/file4");
-const res = OCR.decodeFile();
-console.log(res);
-
-
+const OCR = new ImprovedOCR();
+const filePath4 : string = "./files/file4";
+const res : string[] = OCR.decodeFiles([filePath4],false);
+console.log(res[0]);
