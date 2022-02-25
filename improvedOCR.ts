@@ -1,12 +1,15 @@
 import * as fs from 'fs';
-import { TabToString } from "./TabToString";
+import { CodeArrayToString } from "./CodeArrayToString";
 
 export class ImprovedOCR{
 
     private fileOutput : string = 'output/output.txt';
-    private fileErrOutput : string = 'output/outputError.txt';
-    private fileIllOutput : string = 'output/outputIll.txt';
+    private fileWrongChecksumOutput : string = 'output/outputError.txt';
+    private fileUnreadableOutput : string = 'output/outputIll.txt';
     private fileValidOutput : string = 'output/outputValid.txt';
+    private unreadableSuffix : string = ' ILL';
+    private wrongChecksumSuffix : string = ' ERR';
+
 
     public decodeFiles(files : string[], oneFileOutput : boolean) : Array<string> {
         const codes: Array<string> = [];
@@ -14,23 +17,23 @@ export class ImprovedOCR{
             return codes;
         for (let i = 0; i < files.length; i++) {
             codes[i] = this.addSuffix(ImprovedOCR.getCodeFromFile(files[i]));
-            this.whereWrite(codes[i], oneFileOutput);
+            ImprovedOCR.writeOnFile(codes[i], this.whereWrite(codes[i], oneFileOutput));
         }
         return codes;
     }
 
-    private whereWrite(code : string, oneFileOutput : boolean) : void {
-        let file = "";
+    private whereWrite(code : string, oneFileOutput : boolean) : string {
+        let file : string;
         if(oneFileOutput)
             file = this.fileOutput
         else
-            if(code.includes(' ERR'))
-                file = this.fileErrOutput;
-            else if(code.includes(' ILL'))
-                file = this.fileIllOutput;
+            if(code.includes(this.wrongChecksumSuffix))
+                file = this.fileWrongChecksumOutput;
+            else if(code.includes(this.unreadableSuffix))
+                file = this.fileUnreadableOutput;
             else
                 file = this.fileValidOutput;
-        ImprovedOCR.writeOnFile(code, file);
+        return file;
     }
 
     private static writeOnFile(code : string, filePath : string) : void {
@@ -53,17 +56,16 @@ export class ImprovedOCR{
         return this.isValidChecksum(code) ? code : code+ " ERR";
     }
 
-
     private static getFileContent(filePath : string) : string {
         return  fs.readFileSync(filePath, {encoding:'utf-8'});
     }
 
     private static getCodeFromFile(filePath : string) : string {
-        const tabToString : TabToString = new TabToString();
+        const codeArrayToString : CodeArrayToString = new CodeArrayToString();
         const tab : string[] = ImprovedOCR.fileToTab(filePath);
         let code : string = "";
         for (let i = 0; i <= 24; i += 3)
-            code += tabToString.convert([tab[0].slice(i, i + 3), tab[1].slice(i, i + 3), tab[2].slice(i, i + 3)]);
+            code += codeArrayToString.convert([tab[0].slice(i, i + 3), tab[1].slice(i, i + 3), tab[2].slice(i, i + 3)]);
         return code;
     }
 
@@ -75,7 +77,7 @@ export class ImprovedOCR{
             let line = "";
             for (; fileContent[j] != '\r'; j++)
                 line +=  fileContent[j];
-            j += 2;
+            j += 2; // \r\n on file
             if(line.length < 27)
                 while (line.length < 27)
                     line += " ";
@@ -91,13 +93,18 @@ export class ImprovedOCR{
         return ImprovedOCR.getCodeFromFile(filePath)
     }
 
-    public writeOnFileAccessor(code : string, filePath : string) : void {
+    /*public writeOnFileAccessor(code : string, filePath : string) : void {
         ImprovedOCR.writeOnFile(code, filePath);
-    }
+    }*/
     public getFileContentAccessor(filePath : string) : string {
         return ImprovedOCR.getFileContent(filePath);
     }
     public fileToTabAccessor(filePath : string ) : string[] {
         return ImprovedOCR.fileToTab(filePath);
     }
+
+    public whereWriteAccessor(code : string, oneFileOutput : boolean) : string {
+        return this.whereWrite(code, oneFileOutput);
+    }
+
 }

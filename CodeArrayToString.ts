@@ -1,4 +1,4 @@
-export class TabToString {
+export class CodeArrayToString {
     private keymap : Map<string,string[]> = new Map([
         ["0" , [
             " _ ",
