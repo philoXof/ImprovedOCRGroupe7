@@ -200,7 +200,7 @@ describe('all tests',()=>{
     });
 
 
-    describe('decodeFiles tests User Story 2',()=>{
+    describe('output file, User Story 5',()=>{
         const fileOutput: string = 'output/output.txt';
         const fileWrongChecksumOutput: string = 'output/outputError.txt';
         const fileUnreadableOutput: string = 'output/outputIll.txt';
