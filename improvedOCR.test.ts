@@ -1,10 +1,10 @@
-import {ImprovedOCR} from "./improvedOCR";
 import { CodeArrayToString } from "./CodeArrayToString";
 import fs from "fs";
 import { FileWriter } from "./FileWriter";
 import { FilesPath } from "./FilesPath";
 import { FileReader } from "./FileReader";
 import { Checksum } from "./Checksum";
+import { DecodeFile } from "./DecodeFile";
 
 enum path {
     file1 ="files/file1",
@@ -16,9 +16,6 @@ enum path {
     file7 ="files/file7",
     file8 ="files/file8",
 }
-const ocr : ImprovedOCR = new ImprovedOCR();
-const codeArrayToString : CodeArrayToString = new CodeArrayToString();
-
 
 describe('all tests',()=>{
 
@@ -26,31 +23,31 @@ describe('all tests',()=>{
 
         describe('decoding test User story 1', ()=>{
             test('file 1 should be "123456789"',()=>{
-                expect(ocr.getCodeFromFile(path.file1)).toBe("123456789");
+                expect(DecodeFile.getCode(path.file1)).toBe("123456789");
             });
             test('file 2 should be "111999888"',()=>{
-                expect(ocr.getCodeFromFile(path.file2)).toBe("111999888");
+                expect(DecodeFile.getCode(path.file2)).toBe("111999888");
             });
             test('file 3 should be "912588934"',()=>{
-                expect(ocr.getCodeFromFile(path.file3)).toBe("912588934");
+                expect(DecodeFile.getCode(path.file3)).toBe("912588934");
             });
             test('file 4 should be "111111111"',()=>{
-                expect(ocr.getCodeFromFile(path.file4)).toBe("111111111");
+                expect(DecodeFile.getCode(path.file4)).toBe("111111111");
             });
             test('file 5 should be "921584964"',()=>{
-                expect(ocr.getCodeFromFile(path.file5)).toBe("921584964");
+                expect(DecodeFile.getCode(path.file5)).toBe("921584964");
             });
             test('file 6 should be "418900666"',()=>{
-                expect(ocr.getCodeFromFile(path.file6)).toBe("418900666");
+                expect(DecodeFile.getCode(path.file6)).toBe("418900666");
             });
         });
 
         describe('decoding test user story 3', ()=>{
             test('file 7 should be "12?13678?"', ()=>{
-                expect(ocr.getCodeFromFile(path.file7)).toBe('?2?13678?');
+                expect(DecodeFile.getCode(path.file7)).toBe('?2?13678?');
             });
             test('file 8 should be "312?8?93?"', ()=>{
-                expect(ocr.getCodeFromFile(path.file8)).toBe('312?8?93?');
+                expect(DecodeFile.getCode(path.file8)).toBe('312?8?93?');
             });
         });
     });
@@ -58,70 +55,70 @@ describe('all tests',()=>{
     describe('TabToString tests', ()=>{
 
         test('should be 0', ()=>{
-            expect(codeArrayToString.convert([
+            expect(CodeArrayToString.convert([
                 " _ ",
                 "| |",
                 "|_|",
             ])).toBe("0")
         });
         test('should be 1', ()=>{
-            expect(codeArrayToString.convert([
+            expect(CodeArrayToString.convert([
                 "   ",
                 "  |",
                 "  |",
             ])).toBe("1")
         });
         test('should be 2', ()=>{
-            expect(codeArrayToString.convert([
+            expect(CodeArrayToString.convert([
                 " _ ",
                 " _|",
                 "|_ ",
             ])).toBe("2")
         });
         test('should be 3', ()=>{
-            expect(codeArrayToString.convert([
+            expect(CodeArrayToString.convert([
                 " _ ",
                 " _|",
                 " _|"
             ])).toBe("3")
         });
         test('should be 4', ()=>{
-            expect(codeArrayToString.convert([
+            expect(CodeArrayToString.convert([
                 "   ",
                 "|_|",
                 "  |"
             ])).toBe("4")
         });
         test('should be 5', ()=>{
-            expect(codeArrayToString.convert([
+            expect(CodeArrayToString.convert([
                 " _ ",
                 "|_ ",
                 " _|"
             ])).toBe("5")
         });
         test('should be 6', ()=>{
-            expect(codeArrayToString.convert([
+            expect(CodeArrayToString.convert([
                 " _ ",
                 "|_ ",
                 "|_|"
             ])).toBe("6")
         });
         test('should be 7', ()=>{
-            expect(codeArrayToString.convert([
+            expect(CodeArrayToString.convert([
                 " _ ",
                 "  |",
                 "  |"
             ])).toBe("7")
         });
         test('should be 8', ()=>{
-            expect(codeArrayToString.convert([
+            expect(CodeArrayToString.convert([
                 " _ ",
                 "|_|",
                 "|_|"
             ])).toBe("8")
         });
         test('should be 9', ()=>{
-            expect(codeArrayToString.convert([
+            expect(CodeArrayToString.convert([
                 " _ ",
                 "|_|",
                 " _|"
@@ -142,7 +139,7 @@ describe('all tests',()=>{
     });
 
     describe('createAndInitTab tests', ()=> {
-        const tab: string [] = ocr.fileToTab(path.file1);
+        const tab: string [] = DecodeFile.fileToTab(path.file1);
         test('length should be 3', () => {
             expect(tab.length).toBe(3);
         });
