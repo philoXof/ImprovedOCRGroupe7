@@ -1,6 +1,8 @@
 import {ImprovedOCR} from "./improvedOCR";
 import { CodeArrayToString } from "./CodeArrayToString";
 import fs from "fs";
+import { FileWriter } from "./FileWriter";
+import { FilesPath } from "./FilesPath";
 
 const filePath1 : string = "files/file1";
 const filePath2 : string = "files/file2";
@@ -15,8 +17,6 @@ const codeArrayToString : CodeArrayToString = new CodeArrayToString();
 
 
 describe('all tests',()=>{
-
-
 
     describe('decoding test, user story 1 & 3', ()=>{
         describe('decoding test User story 1', ()=>{
@@ -199,38 +199,33 @@ describe('all tests',()=>{
         });
     });
 
-
     describe('output file, User Story 5',()=>{
-        const fileOutput: string = 'output/output.txt';
-        const fileWrongChecksumOutput: string = 'output/outputError.txt';
-        const fileUnreadableOutput: string = 'output/outputIll.txt';
-        const fileValidOutput: string = 'output/outputValid.txt';
         describe('one file', ()=> {
-            test('code "123456789" should be write in "' + fileOutput + '"', () => {
-                expect(ocr.whereWriteAccessor('123456789', true)).toBe(fileOutput);
+            test('code "123456789" should be write in "' + FilesPath.oneOutput + '"', () => {
+                expect(FileWriter.whereWrite('123456789', true)).toBe(FilesPath.oneOutput);
             });
-            test('code "111999888 ERR" should be write in "' + fileOutput + '"', () => {
-                expect(ocr.whereWriteAccessor('111999888 ERR', true)).toBe(fileOutput);
+            test('code "111999888 ERR" should be write in "' + FilesPath.oneOutput + '"', () => {
+                expect(FileWriter.whereWrite('111999888 ERR', true)).toBe(FilesPath.oneOutput);
             });
-            test('code "418900666 ERR" should be write in "' + fileOutput + '"', () => {
-                expect(ocr.whereWriteAccessor('418900666 ERR', true)).toBe(fileOutput);
+            test('code "418900666 ERR" should be write in "' + FilesPath.oneOutput + '"', () => {
+                expect(FileWriter.whereWrite('418900666 ERR', true)).toBe(FilesPath.oneOutput);
             });
-            test('code "?2?13678? ILL" should be write in "' + fileOutput + '"', () => {
-                expect(ocr.whereWriteAccessor('?2?13678? ILL', true)).toBe(fileOutput);
+            test('code "?2?13678? ILL" should be write in "' + FilesPath.oneOutput + '"', () => {
+                expect(FileWriter.whereWrite('?2?13678? ILL', true)).toBe(FilesPath.oneOutput);
             });
         });
         describe('several file', ()=>{
-            test('code "111111111 ERR" should be write in "' + fileWrongChecksumOutput + '"', ()=>{
-                expect(ocr.whereWriteAccessor('111111111 ERR', false)).toBe(fileWrongChecksumOutput);
+            test('code "111111111 ERR" should be write in "' + FilesPath.wrongChecksum + '"', ()=>{
+                expect(FileWriter.whereWrite('111111111 ERR', false)).toBe(FilesPath.wrongChecksum);
             });
-            test('code "921584964 ERR" should be write in "' + fileWrongChecksumOutput + '"', ()=>{
-                expect(ocr.whereWriteAccessor('921584964 ERR', false)).toBe(fileWrongChecksumOutput);
+            test('code "921584964 ERR" should be write in "' + FilesPath.wrongChecksum + '"', ()=>{
+                expect(FileWriter.whereWrite('921584964 ERR', false)).toBe(FilesPath.wrongChecksum);
             });
-            test('code "912588934" should be write in "' + fileValidOutput + '"', ()=>{
-                expect(ocr.whereWriteAccessor('912588934', false)).toBe(fileValidOutput);
+            test('code "912588934" should be write in "' + FilesPath.valid + '"', ()=>{
+                expect(FileWriter.whereWrite('912588934', false)).toBe(FilesPath.valid);
             });
-            test('code "312?8?93? ILL" should be write in "' + fileUnreadableOutput + '"', ()=>{
-                expect(ocr.whereWriteAccessor('312?8?93? ILL', false)).toBe(fileUnreadableOutput);
+            test('code "312?8?93? ILL" should be write in "' + FilesPath.unreadable + '"', ()=>{
+                expect(FileWriter.whereWrite('312?8?93? ILL', false)).toBe(FilesPath.unreadable);
             });
         });
     });
