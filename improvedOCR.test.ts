@@ -3,6 +3,7 @@ import { CodeArrayToString } from "./CodeArrayToString";
 import fs from "fs";
 import { FileWriter } from "./FileWriter";
 import { FilesPath } from "./FilesPath";
+import { FileReader } from "./FileReader";
 
 const filePath1 : string = "files/file1";
 const filePath2 : string = "files/file2";
@@ -125,13 +126,13 @@ describe('all tests',()=>{
 
     describe('files content tests', ()=>{
         test('file1 should be the same', ()=>{
-            expect(ocr.getFileContentAccessor(filePath1)).toBe(fs.readFileSync(filePath1, {encoding:'utf-8'}));
+            expect(FileReader.getFileContent(filePath1)).toBe(fs.readFileSync(filePath1, {encoding:'utf-8'}));
         });
         test('file3 should be the same', ()=>{
-            expect(ocr.getFileContentAccessor(filePath3)).toBe(fs.readFileSync(filePath3, {encoding:'utf-8'}));
+            expect(FileReader.getFileContent(filePath3)).toBe(fs.readFileSync(filePath3, {encoding:'utf-8'}));
         });
         test('file6 should be the same', ()=>{
-            expect(ocr.getFileContentAccessor(filePath6)).toBe(fs.readFileSync(filePath6, {encoding:'utf-8'}));
+            expect(FileReader.getFileContent(filePath6)).toBe(fs.readFileSync(filePath6, {encoding:'utf-8'}));
         });
     });
 
