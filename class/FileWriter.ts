@@ -1,6 +1,6 @@
 import fs from "fs";
-import { FilesPath } from "./FilesPath";
-import { Suffix } from "./Suffix";
+import { OutputFilesPath } from "../enum/OutputFilesPath";
+import { Suffix } from "../enum/Suffix";
 
 export class FileWriter{
 
@@ -14,14 +14,14 @@ export class FileWriter{
     static whereWrite(code : string, oneFileOutput : boolean) : string {
         let file : string;
         if(oneFileOutput)
-            file = FilesPath.oneOutput
+            file = OutputFilesPath.oneOutput
         else
         if(code.includes(Suffix.wrongChecksum))
-            file = FilesPath.wrongChecksum;
+            file = OutputFilesPath.wrongChecksum;
         else if(code.includes(Suffix.unreadable))
-            file = FilesPath.unreadable;
+            file = OutputFilesPath.unreadable;
         else
-            file = FilesPath.valid;
+            file = OutputFilesPath.valid;
         return file;
     }
 }

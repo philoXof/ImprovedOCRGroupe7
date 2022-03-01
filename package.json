@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node index.ts",
-    "test": "jest improvedOCR.test.ts",
+    "test": "jest tests/improvedOCR.test.ts",
     "live-test": "npm run test -- --watch"
   },
   "repository": {

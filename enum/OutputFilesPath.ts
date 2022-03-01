@@ -1,4 +1,4 @@
-export enum FilesPath{
+export enum OutputFilesPath{
     oneOutput = 'output/output.txt',
     wrongChecksum  = 'output/outputError.txt',
     unreadable  = 'output/outputIll.txt',

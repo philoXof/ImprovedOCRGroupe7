@@ -1,6 +1,6 @@
-import { FileWriter } from "./FileWriter";
-import { Checksum } from "./Checksum";
-import { DecodeFile } from "./DecodeFile";
+import { FileWriter } from "./class/FileWriter";
+import { Checksum } from "./class/Checksum";
+import { DecodeFile } from "./class/DecodeFile";
 
 export class ImprovedOCR{
 
