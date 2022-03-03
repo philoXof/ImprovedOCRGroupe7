@@ -11,7 +11,7 @@ export class DecodeFile{
     }
 
     static fileToTab(filePath : string) : string[] {
-        let fileContent : string = FileReader.getFileContent(filePath);
+        let fileContent : string = FileReader.getContent(filePath);
         let tab : string[] = ["","",""];
 
         for (let i = 0, j = 0; i <= 2; i++) {

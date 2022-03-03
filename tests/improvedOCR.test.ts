@@ -128,13 +128,13 @@ describe('all tests',()=>{
 
     describe('files content tests', ()=>{
         test('file1 should be the same', ()=>{
-            expect(FileReader.getFileContent(path.file1)).toBe(fs.readFileSync(path.file1, {encoding:'utf-8'}));
+            expect(FileReader.getContent(path.file1)).toBe(fs.readFileSync(path.file1, {encoding:'utf-8'}));
         });
         test('file3 should be the same', ()=>{
-            expect(FileReader.getFileContent(path.file3)).toBe(fs.readFileSync(path.file3, {encoding:'utf-8'}));
+            expect(FileReader.getContent(path.file3)).toBe(fs.readFileSync(path.file3, {encoding:'utf-8'}));
         });
         test('file6 should be the same', ()=>{
-            expect(FileReader.getFileContent(path.file6)).toBe(fs.readFileSync(path.file6, {encoding:'utf-8'}));
+            expect(FileReader.getContent(path.file6)).toBe(fs.readFileSync(path.file6, {encoding:'utf-8'}));
         });
     });
 
