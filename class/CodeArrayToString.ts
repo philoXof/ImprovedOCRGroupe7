@@ -1,10 +1,4 @@
 export class CodeArrayToString {
-    static convert(tab : string[]) : string {
-        for (let [key,value] of this.keymap)
-            if(JSON.stringify(value) == JSON.stringify(tab))
-                return key;
-        return "?";
-    }
 
     static keymap : Map<string,string[]> = new Map([
         ["0" , [
@@ -31,26 +25,36 @@ export class CodeArrayToString {
             " _ ",
             "|_ ",
             " _|"
-            ]],
+        ]],
         ["6" , [
             " _ ",
             "|_ ",
             "|_|"
-            ]],
+        ]],
         ["7" ,[
             " _ ",
             "  |",
             "  |"
-            ]],
+        ]],
         ["8" ,[
             " _ ",
             "|_|",
             "|_|"
-            ]],
+        ]],
         ["9" ,[
             " _ ",
             "|_|",
             " _|"
-            ]]
+        ]]
     ]);
+
+
+    static convert(tab : string[]) : string {
+        for (let [key,value] of this.keymap)
+            if(JSON.stringify(value) == JSON.stringify(tab))
+                return key;
+        return "?";
+    }
+
+
 }
